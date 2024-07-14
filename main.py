@@ -1,7 +1,6 @@
 """
 THIS SCRIPT IS DESIGNED FOR PERSONAL USE, MODIFY IT ACCORDING TO YOUR OWN NEEDS, NO NEED TO CHANGE WHOLE SCRIPT JUST MAJOR KEYWORDS [BEST IF YOU USE IT FOR AFFILIATE PURPOSES]
 """
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -31,6 +30,14 @@ logging.basicConfig(filename='image_details.log', level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 
+# # Set up the web driver
+# cwd = os.getcwd()
+
+# driver_path = f'{cwd}/chromedriver/chromedriver.exe'
+# service = Service(driver_path)
+# driver = webdriver.Chrome(service=service)
+
+
 def main():
     data = []
 
@@ -50,7 +57,7 @@ def main():
     print(f"Unique URL: {anchor_tag}")
 
     found = False
-    with open("a.txt", "r") as f:
+    with open("records.txt", "r") as f:
         for line in f:
             if anchor_tag in line.strip():
                 found = True
@@ -59,7 +66,7 @@ def main():
 
     if not found:
         print("-- NEW DEAL FOUND --")
-        with open("a.txt", "a") as g:  # Use 'a' to append instead of 'w+'
+        with open("records.txt", "a") as g:
             g.write(f"{anchor_tag}\n")
 
         driver.get(anchor_tag)
@@ -118,6 +125,8 @@ def main():
 
             data.append(discount)
 
+            print(data)
+
         except Exception as e:
             print(f"This error occurred while scraping product details: {e}")
 
@@ -136,8 +145,6 @@ def main():
             print(f"Merchant URL: {final_url}")
 
             data.append(final_url)
-
-            print(data)
 
         except Exception as e:
             print(f"This went wrong while generating merchant link: {e}")
